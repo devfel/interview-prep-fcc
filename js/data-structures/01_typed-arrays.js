@@ -53,10 +53,10 @@ Your i32View view of your buffer should be 16 elements long.
 */
 
 let buffer = new ArrayBuffer(64);
-console.log(buffer);
+//console.log(buffer);
 let i32View = new Int32Array(buffer);
-console.log(i32View);
+//console.log(i32View);
 
 /* Another Way: */
 let i32 = new Int32Array(16);
-console.log(i32);
+//console.log(i32);
