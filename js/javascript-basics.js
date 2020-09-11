@@ -46,3 +46,43 @@ function htmlColorNames(arr) {
   arr.splice(startIndex, amountToDelete, "DarkSalmon", "BlanchedAlmond");
   return arr;
 }
+
+// Copy Array Items Using slice()
+// We have defined a function, forecast, that takes an array as an argument. Modify the function using slice() to extract information from the argument array and return a new array that contains the elements 'warm' and 'sunny'.
+//--- array.slice() - dont modify original array, make a copy. 2 parameters — the first is the index at which to begin extraction, and the second is the index at which to stop extraction. (not including the last element)
+function forecast(arr) {
+  return arr.slice(2, 4);
+}
+forecast(["cold", "rainy", "warm", "sunny", "cool", "thunderstorms"]);
+
+// Copy an Array with the Spread Operator
+// We have defined a function, copyMachine which takes arr (an array) and num (a number) as arguments. The function is supposed to return a new array made up of num copies of arr. We have done most of the work for you, but it doesn't work quite right yet. Modify the function using spread syntax so that it works correctly (hint: another method we have already covered might come in handy here!).
+//--- spread operator ...arr - does not change original array, put elements separated for each element on the arr used.
+function copyMachine(arr, num) {
+  let newArr = [];
+  while (num >= 1) {
+    newArr.push([...arr]);
+    num--;
+  }
+  return newArr;
+}
+copyMachine([true, false, true], 2);
+
+// Combine Arrays with the Spread Operator
+// We have defined a function spreadOut that returns the variable sentence. Modify the function using the spread operator so that it returns the array ['learning', 'to', 'code', 'is', 'fun'].
+//--- another spread operator usage.
+function spreadOut() {
+  let fragment = ["to", "code"];
+  let sentence = ["learning", ...fragment, "is", "fun"];
+  return sentence;
+}
+spreadOut();
+
+// Check For The Presence of an Element With indexOf
+// indexOf() can be incredibly useful for quickly checking for the presence of an element on an array. We have defined a function, quickCheck, that takes an array and an element as arguments. Modify the function using indexOf() so that it returns true if the passed element exists on the array, and false if it does not.
+//--- indexOf('banana') - parameter is an element to be looked into the array. returns -1 if elements doesnt exist and index if exisits.
+//--- !! can be used to return a boolean value. ! negates and !! get back to original value but now as boolean.
+function quickCheck(arr, elem) {
+  return !!(arr.indexOf(elem) + 1);
+}
+quickCheck(["squash", "onions", "shallots"], "mushrooms");
