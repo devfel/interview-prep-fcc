@@ -143,3 +143,104 @@ let myNestedArray = [
     ],
   ],
 ];
+
+// Add Key-Value Pairs to JavaScript Objects
+// A foods object has been created with three entries. Using the syntax of your choice, add three more entries to it: bananas with a value of 13, grapes with a value of 35, and strawberries with a value of 27.
+//--- Add Attributes to Objects;
+let foods = {
+  apples: 25,
+  oranges: 32,
+  plums: 28,
+};
+//method 1
+foods["bananas"] = 13;
+//method 2
+foods.grapes = 35;
+//method 3
+const attribute = "strawberries";
+foods[attribute] = 27;
+
+// Modify an Object Nested Within an Object
+// Here we've defined an object userActivity, which includes another object nested within it. Set the value of the online key to 45.
+//--- Change nested attrib to objects
+let userActivity = {
+  id: 23894201352,
+  date: "January 1, 2017",
+  data: {
+    totalUsers: 51,
+    online: 42,
+  },
+};
+userActivity.data.online = 45;
+
+// Access Property Names with Bracket Notation
+// We've defined a function, checkInventory, which receives a scanned item as an argument. Return the current value of the scannedItem key in the foods object. You can assume that only valid keys will be provided as an argument to checkInventory.
+// Access attribute using Brakcet.
+let foods = {
+  apples: 25,
+  oranges: 32,
+  plums: 28,
+  bananas: 13,
+  grapes: 35,
+  strawberries: 27,
+};
+function checkInventory(scannedItem) {
+  return foods[scannedItem];
+}
+checkInventory("apples");
+
+// Use the delete Keyword to Remove Object Properties
+// Use the delete keyword to remove the oranges, plums, and strawberries keys from the foods object.
+// delete to remove attribute from objects
+let foods = {
+  apples: 25,
+  oranges: 32,
+  plums: 28,
+  bananas: 13,
+  grapes: 35,
+  strawberries: 27,
+};
+delete foods.oranges;
+delete foods.plums;
+delete foods.strawberries;
+
+// Check if an Object has a Property
+// We've created an object, users, with some users in it and a function isEveryoneHere, which we pass the users object to as an argument. Finish writing this function so that it returns true only if the users object contains all four names, Alan, Jeff, Sarah, and Ryan, as keys, and false otherwise.
+// Method 2 uses every in a array to check if all are true.
+let users = {
+  Alan: {
+    age: 27,
+    online: true,
+  },
+  Jeff: {
+    age: 32,
+    online: true,
+  },
+  Sarah: {
+    age: 48,
+    online: true,
+  },
+  Ryan: {
+    age: 19,
+    online: true,
+  },
+};
+//Method 1
+function isEveryoneHere(obj) {
+  if (
+    obj.hasOwnProperty("Alan") &&
+    obj.hasOwnProperty("Jeff") &&
+    obj.hasOwnProperty("Sarah") &&
+    obj.hasOwnProperty("Ryan")
+  ) {
+    return true;
+  }
+  return false;
+}
+//Method 2
+function isEveryoneHere(obj) {
+  return ["Alan", "Jeff", "Sarah", "Ryan"].every((name) =>
+    obj.hasOwnProperty(name)
+  );
+}
+isEveryoneHere(users);
