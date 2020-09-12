@@ -141,3 +141,42 @@ function destroyer(arr) {
     return !args.includes(val);
   });
 }
+
+// Exerc-04 ---------------------------------- //
+// Wherefore art thouPassed
+// Make a function that looks through an array of objects (first argument) and returns an array of all objects that have matching name and value pairs (second argument). Each name and value pair of the source object has to be present in the object from the collection if it is to be included in the returned array.
+
+function whatIsInAName(collection, source) {
+  let sourceProp = Object.getOwnPropertyNames(source);
+
+  return collection.filter((elem) => {
+    //console.log(" ");
+    //console.log(elem);
+    for (let i = 0; i < sourceProp.length; i++) {
+      //console.log("i: " + i);
+      //console.log(sourceProp[i] + " source: " + source[sourceProp[i]]);
+      //console.log(sourceProp[i] + " collec: " + elem[sourceProp[i]]);
+      if (source[sourceProp[i]] !== elem[sourceProp[i]]) {
+        //console.log("Negado");
+        return false;
+      }
+    }
+    //console.log("Aceito");
+    return true;
+  });
+}
+
+whatIsInAName(
+  [{ apple: 1, bat: 2 }, { bat: 2 }, { apple: 1, bat: 2, cookie: 2 }],
+  { apple: 1, bat: 2, cookie: 2 }
+);
+
+//Another solution using every and another way of saying getOwnPropertyNames (keys).
+function whatIsInAName2(collection, source) {
+  var srcKeys = Object.keys(source);
+  return collection.filter((obj) => {
+    return srcKeys.every((key) => {
+      return obj[key] === source[key];
+    });
+  });
+}
