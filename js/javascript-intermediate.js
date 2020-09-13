@@ -172,11 +172,78 @@ whatIsInAName(
 );
 
 //Another solution using every and another way of saying getOwnPropertyNames (keys).
-function whatIsInAName2(collection, source) {
-  var srcKeys = Object.keys(source);
+function whatIsInAName(collection, source) {
   return collection.filter((obj) => {
-    return srcKeys.every((key) => {
+    return Object.keys(source).every((key) => {
       return obj[key] === source[key];
     });
   });
+}
+
+// Exerc-05 ---------------------------------- //
+// Spinal Tap Case
+// Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
+//--- String split and join, split for separting the original string and join to unify em after.
+//--- regex
+// \s matchis whitespaece
+// | or
+// _ matches underscore _.
+// (?= )  Positive look ahead without including it
+// [] match character in the set
+// A-Z matchs range A to Z (code 65 to 90).
+function spinalCase(str) {
+  let arrayAux = str
+    .split(/\s|_|(?=[A-Z])/)
+    .join("-")
+    .toLowerCase();
+  return arrayAux;
+}
+spinalCase("This Is Spinal Tap");
+spinalCase("thisIsSpinalTap");
+spinalCase("The_Andy_Griffith_Show");
+
+// Exerc-06 ---------------------------------- //
+// Pig Latin
+// Translate the provided string to Pig Latin. Input strings are guaranteed to be English words in all lowercase.
+function translatePigLatin(str) {
+  let auxStr = str.split("");
+
+  // Regex to find what is the last consonant before the first vowel, doesnt work when vowel is at the beggining of the word.
+  let lastConsBeforeVowel = /[a-z](?=[a,e,i,o,u])/i;
+
+  // indexOf(param) indexOf does not accept regular expressions as paramenters, search does.
+  // save the index that goes to the end.
+  let toEndIndex = str.search(lastConsBeforeVowel);
+
+  //Case the word begins with vowel
+  if (str[0].match(/[a,e,i,o,u]/i)) {
+    auxStr.push("way");
+    auxStr = auxStr.join("");
+  }
+
+  //If it begins with consonant
+  else {
+    for (let i = 0; i <= toEndIndex; i++) {
+      auxStr.push(auxStr[i]);
+    }
+    for (let i = 0; i <= toEndIndex; i++) {
+      auxStr.shift();
+    }
+    auxStr.push("ay");
+    auxStr = auxStr.join("");
+  }
+
+  return auxStr;
+}
+
+translatePigLatin("eight"); // eightway
+translatePigLatin("schwartz"); //artzschway
+translatePigLatin("glove"); //oveglay
+
+// another way using groups of RegEx and Replace
+//--- str.replace(regexp|substr, newSubstr|function)
+function translatePigLatin(str) {
+  return str
+    .replace(/^[aeiou]\w*/, "$&way")
+    .replace(/(^[^aeiou]+)(\w*)/, "$2$1ay");
 }
