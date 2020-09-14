@@ -392,6 +392,7 @@ function pairElement(str) {
 }
 
 // Exerc-09 ---------------------------------- //
+// Missing letters
 // Find the missing letter in the passed letter range and return it. If all letters are present in the range, return undefined.
 //--- variable.charCodeAt(index) : 0 is default for index, return the Number "code" for the string found.
 //--- String.fromCharCode(100) : return the string for the code passed as argument.
@@ -455,6 +456,104 @@ function fearNotLetter(str) {
 
   return missing;
 }
-
 // you could do even shorter with 1 for and 1 if and a return line.
 // or even in a more complicated way using RegExp
+
+// Exerc-10 ---------------------------------- //
+// Sorted UnionPassed
+// Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+//--- array.toString() to transform all the array and subarrays into a string.
+
+function uniteUnique(...arr) {
+  // converting the paramenters in one only array using toString to transform em in one string them spliting the elements separated by , and them transform all the itens back on numbers with map +x.
+  let arrAux = arr
+    .toString()
+    .split(",")
+    .map((x) => +x);
+
+  let arrResult = [];
+
+  arrAux.forEach((elem) => {
+    //check if eleme exists on the arrResult
+    if (arrResult.indexOf(elem) === -1) {
+      arrResult.push(elem);
+    }
+  });
+
+  //console.log(arrAux);
+  //console.log(arrResult);
+  return arrResult;
+}
+
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]); //should return [1, 3, 2, 5, 4
+
+// another solution using double fors to iterate on the 2 layers array
+function uniteUnique(arr) {
+  var args = [...arguments];
+  var result = [];
+  for (var i = 0; i < args.length; i++) {
+    for (var j = 0; j < args[i].length; j++) {
+      if (!result.includes(args[i][j])) {
+        result.push(args[i][j]);
+      }
+    }
+  }
+  return result;
+}
+
+// another solution using ES6 with concat and ...new Set
+function uniteUnique(...arrays) {
+  //make an array out of the given arrays and flatten it (using the spread operator)
+  const flatArray = [].concat(...arrays);
+
+  // create a Set which clears any duplicates since it's a regulat set and not a multiset
+  return [...new Set(flatArray)];
+}
+
+// Exerc-11 ---------------------------------- //
+// Convert HTML Entities
+// Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+function convertHTML(str) {
+  let strArray = str.split("");
+  let resultArray = [];
+
+  strArray.forEach((elem) => {
+    switch (elem) {
+      case "&":
+        resultArray.push("&amp;");
+        break;
+      case "<":
+        resultArray.push("&lt;");
+        break;
+      case ">":
+        resultArray.push("&gt;");
+        break;
+      case '"':
+        resultArray.push("&quot;");
+        break;
+      case "'":
+        resultArray.push("&apos;");
+        break;
+      default:
+        resultArray.push(elem);
+    }
+  });
+
+  return resultArray.join("");
+}
+
+convertHTML("Dolce & Gabbana");
+
+// another way using regx and str.replace
+function convertHTML(str) {
+  // Use Object Lookup to declare as many HTML entities as needed.
+  const htmlEntities = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&apos;",
+  };
+  // Using a regex, replace characters with it's corresponding html entity
+  return str.replace(/([&<>\"'])/g, (match) => htmlEntities[match]);
+}
