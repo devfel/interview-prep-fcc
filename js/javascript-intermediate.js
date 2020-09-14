@@ -600,3 +600,77 @@ function sumFibs(num) {
   }
   return result;
 }
+
+// Exerc-13 ---------------------------------- //
+// Sum All Primes
+// Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
+function sumPrimes(num) {
+  let sum = 0;
+  let current = 2;
+
+  // loop through the numbers checkings if each one is prime or not and adding to the sum variable if prime.
+  while (current <= num) {
+    if (isPrime(current)) {
+      sum += current;
+    }
+    current++;
+  }
+  return sum;
+}
+// function to check if a number is prime, return true or false.
+function isPrime(x) {
+  for (let i = x - 1; i > 1; i--) {
+    if (x % i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+sumPrimes(10);
+// there are a ton of other ways to solve this in much more efficient ways, check Sieve of Eratosthenes wikipedia for example. It is possible with reduce, with recursion and so on.
+
+// Exerc-14 ---------------------------------- //
+// Smallest Common Multiple
+//--- uses array.every.
+function smallestCommons(arr) {
+  let minMultipleFound = false;
+  let minMultiple = 0;
+  let completeArray = [];
+
+  // transform the argument into a full array with the intermediate itens
+  for (let i = Math.min(...arr); i <= Math.max(...arr); i++) {
+    completeArray.push(i);
+  }
+
+  // while the smallest common multiple is not found keep looking
+  while (minMultipleFound === false) {
+    minMultiple++;
+    // if to check if all elements are divisible by minMultiple
+    if (completeArray.every((elem) => isDivisble(minMultiple, elem))) {
+      minMultipleFound = true;
+    }
+  }
+  // this part can be written like this:
+  // while(!(completeArray.every(elem => isDivisble(minMultiple, elem)))) { minMultiple++;} //and minMultiple starts in 1;
+
+  return minMultiple;
+}
+
+function isDivisble(num, divisor) {
+  if (num % divisor === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+smallestCommons([1, 5]);
+smallestCommons([2, 10]); //should return 2520.
+
+// can be done using euclidian algorithm
+// can be done by the primes
+// 30 = 2 × 3 × 5
+// 45 = 3 × 3 × 5
+// 56 = 2 x 2 x 2 x 7
+// lcm([30, 45, 56]) = 2 x 2 x 2 x 3 x 3 x 5 x 7 = 2520
