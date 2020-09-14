@@ -310,3 +310,151 @@ function myReplace(str, before, after) {
   // return string with argument "before" replaced by argument "after" (with correct case)
   return str.replace(before, after);
 }
+
+// Exerc-08 ---------------------------------- //
+// DNA Pairing
+// Base pairs are a pair of AT and CG. Match the missing element to the provided character. Return the provided character as the first element in each array. For example, for the input GCG, return [["G", "C"], ["C","G"],["G", "C"]]
+//--- switch case js and array.forEach()
+
+function pairElement(str) {
+  let strArray = str.split("");
+  let dnaResult = [];
+
+  strArray.forEach((elem) => {
+    //Can use IFs but its not the best way.
+    switch (elem) {
+      case "A":
+        dnaResult.push(["A", "T"]);
+        break;
+      case "T":
+        dnaResult.push(["T", "A"]);
+        break;
+      case "C":
+        dnaResult.push(["C", "G"]);
+        break;
+      case "G":
+        dnaResult.push(["G", "C"]);
+        break;
+      default:
+      //console.log("Not an DNA element");
+    }
+  });
+  return dnaResult;
+}
+
+pairElement("GCG");
+pairElement("ATCGA");
+
+//--- another solution using map and objects
+function pairElement(str) {
+  //create object for pair lookup
+  var pairs = {
+    A: "T",
+    T: "A",
+    C: "G",
+    G: "C",
+  };
+  //split string into array of characters
+  var arr = str.split("");
+  //map character to array of character and matching pair
+  return arr.map((x) => [x, pairs[x]]);
+}
+
+//--- one more solution with for and switch case
+function pairElement(str) {
+  // Return each strand as an array of two elements, the original and the pair.
+  var paired = [];
+
+  // Function to check with strand to pair.
+  var search = function (char) {
+    switch (char) {
+      case "A":
+        paired.push(["A", "T"]);
+        break;
+      case "T":
+        paired.push(["T", "A"]);
+        break;
+      case "C":
+        paired.push(["C", "G"]);
+        break;
+      case "G":
+        paired.push(["G", "C"]);
+        break;
+    }
+  };
+
+  // Loops through the input and pair.
+  for (var i = 0; i < str.length; i++) {
+    search(str[i]);
+  }
+
+  return paired;
+}
+
+// Exerc-09 ---------------------------------- //
+// Find the missing letter in the passed letter range and return it. If all letters are present in the range, return undefined.
+//--- variable.charCodeAt(index) : 0 is default for index, return the Number "code" for the string found.
+//--- String.fromCharCode(100) : return the string for the code passed as argument.
+//--- using array.map()
+function fearNotLetter(str) {
+  let strArray = str.split("");
+  let missingLetter = undefined;
+
+  strArray = strArray.map((elem) => {
+    return elem.charCodeAt();
+  });
+
+  let aux = 0;
+  for (let i = strArray[0]; i < strArray[strArray.length - 1]; i++) {
+    if (i !== strArray[aux]) {
+      missingLetter = String.fromCharCode(i);
+      break;
+    }
+    aux++;
+  }
+  return missingLetter;
+}
+
+fearNotLetter("abce");
+
+// other solution
+function fearNotLetter(str) {
+  for (var i = 0; i < str.length; i++) {
+    /* code of current character */
+    var code = str.charCodeAt(i);
+
+    /* if code of current character is not equal to first character + no of iteration
+        hence character has been escaped */
+    if (code !== str.charCodeAt(0) + i) {
+      /* if current character has escaped one character find previous char and return */
+      return String.fromCharCode(code - 1);
+    }
+  }
+  return undefined;
+}
+
+// another map solution without for
+// Adding this solution for the sake of avoiding using 'for' and 'while' loops.
+// See the explanation for reference as to why. It's worth the effort.
+
+function fearNotLetter(str) {
+  var compare = str.charCodeAt(0),
+    missing;
+
+  str.split("").map(function (letter, index) {
+    //As we map through our letters’ character codes, we go comparing with the one that should be in that position.
+    //If the current letter matches, we move the comparison variable to its next position so we can compare on the next cycle.
+    if (str.charCodeAt(index) == compare) {
+      ++compare;
+    }
+    //If not, the missing letter will be assigned to the missing variable, which will be returned after the map is finished.
+    else {
+      missing = String.fromCharCode(compare);
+    }
+  });
+
+  return missing;
+}
+
+// you could do even shorter with 1 for and 1 if and a return line.
+// or even in a more complicated way using RegExp
