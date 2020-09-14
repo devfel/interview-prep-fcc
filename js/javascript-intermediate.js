@@ -517,6 +517,7 @@ function convertHTML(str) {
   let strArray = str.split("");
   let resultArray = [];
 
+  // you can also use For to do this.
   strArray.forEach((elem) => {
     switch (elem) {
       case "&":
@@ -556,4 +557,46 @@ function convertHTML(str) {
   };
   // Using a regex, replace characters with it's corresponding html entity
   return str.replace(/([&<>\"'])/g, (match) => htmlEntities[match]);
+}
+
+// Exerc-12 ---------------------------------- //
+// Sum All Odd Fibonacci Numbers
+// Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+function sumFibs(num) {
+  if (num === 1) {
+    return 1;
+  }
+
+  let sum = 1;
+  let last = 1;
+  let current = 1;
+  let aux = 0;
+  // watch for not using a for i < num. or it will return big numbers.
+  while (current <= num) {
+    aux = current;
+    current = current + last;
+    last = aux;
+
+    if (aux % 2 === 1) {
+      sum += aux;
+    }
+  }
+  return sum;
+}
+sumFibs(4);
+
+// another way of writting similar logic
+function sumFibs(num) {
+  var prevNumber = 0;
+  var currNumber = 1;
+  var result = 0;
+  while (currNumber <= num) {
+    if (currNumber % 2 !== 0) {
+      result += currNumber;
+    }
+
+    currNumber += prevNumber;
+    prevNumber = currNumber - prevNumber;
+  }
+  return result;
 }
