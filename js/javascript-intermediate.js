@@ -808,5 +808,35 @@ function binaryAgent(str) {
     ...str.split(" ").map((char) => parseInt(char, 2))
   );
 }
+// curiosity: ES6 supports binary numeric literals for integers  with the prefix 0b or 0B.
+//var binary = 0b1101000; // code for 104
+//console.log(binary); // prints 104
 
 // Exerc-18 ---------------------------------- //
+// Everything Be True
+// Check if the predicate (second argument) is truthy on all elements of a collection (first argument). In other words, you are given an array collection of objects. The predicate pre will be an object property and you need to return true if its value is truthy. Otherwise, return false.
+function truthCheck(collection, pre) {
+  return collection.every((elem) => !!elem[pre]); //!! is not necessary I used to make it clear Bolean. could use Boolean(value) too;
+}
+
+truthCheck(
+  [
+    { user: "Tinky-Winky", sex: "male" },
+    { user: "Dipsy", sex: "male" },
+    { user: "Laa-Laa", sex: "female" },
+    { user: "Po", sex: "female" },
+  ],
+  "sex"
+); //should return true
+truthCheck(
+  [
+    { user: "Tinky-Winky", sex: "male" },
+    { user: "Dipsy" },
+    { user: "Laa-Laa", sex: "female" },
+    { user: "Po", sex: "female" },
+  ],
+  "sex"
+); //should return false.
+
+// Exerc-19 ---------------------------------- //
+// Arguments Optional
