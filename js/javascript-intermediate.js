@@ -674,3 +674,139 @@ smallestCommons([2, 10]); //should return 2520.
 // 45 = 3 × 3 × 5
 // 56 = 2 x 2 x 2 x 7
 // lcm([30, 45, 56]) = 2 x 2 x 2 x 3 x 3 x 5 x 7 = 2520
+
+// Exerc-15 ---------------------------------- //
+// Drop it
+// using array find, indexOf and slice.
+
+function dropElements(arr, func) {
+  //find the index where the array will be cut off.
+  //use slice(index)
+
+  let elementValue = arr.find((elem) => func(elem));
+  let indexToCut = arr.indexOf(elementValue);
+  let resultArray = arr.slice(indexToCut);
+
+  if (elementValue === undefined) {
+    return [];
+  } else {
+    return resultArray;
+  }
+}
+
+dropElements([1, 2, 3], function (n) {
+  return n <= 2;
+});
+dropElements([0, 1, 0, 1], function (n) {
+  return n === 1;
+});
+dropElements([1, 2, 3, 7, 4], function (n) {
+  return n > 3;
+}); //should return [7, 4].
+dropElements([1, 2, 3, 4], function (n) {
+  return n > 5;
+}); //should return [].
+
+// can be done using shift 01
+function dropElements(arr, func) {
+  var times = arr.length;
+  for (var i = 0; i < times; i++) {
+    if (func(arr[0])) {
+      break;
+    } else {
+      arr.shift();
+    }
+  }
+  return arr;
+}
+
+// another shift solution
+function dropElements(arr, func) {
+  while (arr.length > 0 && !func(arr[0])) {
+    arr.shift();
+  }
+  return arr;
+}
+
+// can be done using ES6 findIndex function and a ternary if.
+function dropElements(arr, func) {
+  return arr.slice(arr.findIndex(func) >= 0 ? arr.findIndex(func) : arr.length);
+}
+
+// even recursion
+function dropElements(arr, func, i = 0) {
+  return i < arr.length && !func(arr[i])
+    ? dropElements(arr.slice(i + 1), func, i)
+    : arr;
+}
+
+// Exerc-16 ---------------------------------- //
+// SteamrollerPassed
+// Flatten a nested array. You must account for varying levels of nesting.
+
+function steamrollArray(arr) {
+  let flatArray = [].concat(...arr);
+
+  //check if there is a element of the type array, to repeat concat in that case.
+  while (flatArray.some((elem) => Array.isArray(elem))) {
+    flatArray = [].concat(...flatArray);
+  }
+
+  //console.log (flatArray);
+  return flatArray;
+}
+
+steamrollArray([[["a"]], [["b"]]]); //should return ["a", "b"].
+steamrollArray([1, [2], [3, [[4]]]]); //should return [1, 2, 3, 4].
+steamrollArray([1, [], [3, [[4]]]]); //should return [1, 3, 4].
+steamrollArray([1, {}, [3, [[4]]]]); //should return [1, {}, 3, 4].
+// Your solution should not use the Array.prototype.flat() or Array.prototype.flatMap() methods.
+
+// Solution using .flat would be like this:
+function steamrollArray(arr) {
+  return arr.flat(Infinity);
+}
+
+// another solution without .flat but with recursion.
+function steamrollArray(arr) {
+  let flat = [].concat(...arr);
+  return flat.some(Array.isArray) ? steamrollArray(flat) : flat;
+}
+
+// one more similar recursive solution
+function steamrollArray(val, flatArr = []) {
+  val.forEach((item) => {
+    if (Array.isArray(item)) steamrollArray(item, flatArr);
+    else flatArr.push(item);
+  });
+  return flatArr;
+}
+
+// Exerc-17 ---------------------------------- //
+// Binary Agents
+// Return an English translated sentence of the passed binary string. The binary string will be space separated.
+
+function binaryAgent(str) {
+  // split the original array where there is space.
+  let strSplited = str.split(" ");
+  // make a copy with map transforming binary into integers.
+  let strDecimal = strSplited.map((elem) => parseInt(elem, 2));
+  // transform the decimal array of numbers into the string.
+  let result = String.fromCharCode(...strDecimal);
+
+  //console.log(result);
+  return result;
+}
+
+binaryAgent(
+  "01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"
+);
+
+// same solution with only one line
+function binaryAgent(str) {
+  return String.fromCharCode(
+    ...str.split(" ").map((char) => parseInt(char, 2))
+  );
+}
+
+// Exerc-18 ---------------------------------- //
