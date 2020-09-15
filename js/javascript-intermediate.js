@@ -121,9 +121,9 @@ const destroyer = (arr, ...valsToRemove) =>
 // another solution using /slice, arguments keyword and call/apply function.
 // arguments is an Array-like object that contains the values of the arguments
 function destroyer(arr) {
-  var args = Array.prototype.slice.call(arguments);
-  for (var i = 0; i < arr.length; i++) {
-    for (var j = 0; j < args.length; j++) {
+  let args = Array.prototype.slice.call(arguments);
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < args.length; j++) {
       if (arr[i] === args[j]) {
         delete arr[i];
       }
@@ -136,7 +136,7 @@ function destroyer(arr) {
 // The Array.from(arrayLike) method creates a new, shallow-copied Array instance from an array-like or iterable object.
 // Array.from can have a second parameter to create an expression Ex.: console.log(Array.from([1, 2, 3], x => x + x)); Output: Array [2, 4, 6]
 function destroyer(arr) {
-  var args = Array.from(arguments).slice(1);
+  let args = Array.from(arguments).slice(1);
   return arr.filter(function (val) {
     return !args.includes(val);
   });
@@ -283,7 +283,7 @@ myReplace("He is Sleeping on the couch", "Sleeping", "sitting");
 // Aditional solution using slice(1) and charAt(0)
 function myReplace(str, before, after) {
   // Find index where before is on string
-  var index = str.indexOf(before);
+  let index = str.indexOf(before);
   // Check to see if the first letter is uppercase or not
   if (str[index] === str[index].toUpperCase()) {
     // Change the after word to be capitalized before we use it.
@@ -348,14 +348,14 @@ pairElement("ATCGA");
 //--- another solution using map and objects
 function pairElement(str) {
   //create object for pair lookup
-  var pairs = {
+  let pairs = {
     A: "T",
     T: "A",
     C: "G",
     G: "C",
   };
   //split string into array of characters
-  var arr = str.split("");
+  let arr = str.split("");
   //map character to array of character and matching pair
   return arr.map((x) => [x, pairs[x]]);
 }
@@ -363,10 +363,10 @@ function pairElement(str) {
 //--- one more solution with for and switch case
 function pairElement(str) {
   // Return each strand as an array of two elements, the original and the pair.
-  var paired = [];
+  let paired = [];
 
   // Function to check with strand to pair.
-  var search = function (char) {
+  let search = function (char) {
     switch (char) {
       case "A":
         paired.push(["A", "T"]);
@@ -384,7 +384,7 @@ function pairElement(str) {
   };
 
   // Loops through the input and pair.
-  for (var i = 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i++) {
     search(str[i]);
   }
 
@@ -420,9 +420,9 @@ fearNotLetter("abce");
 
 // other solution
 function fearNotLetter(str) {
-  for (var i = 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i++) {
     /* code of current character */
-    var code = str.charCodeAt(i);
+    let code = str.charCodeAt(i);
 
     /* if code of current character is not equal to first character + no of iteration
         hence character has been escaped */
@@ -439,7 +439,7 @@ function fearNotLetter(str) {
 // See the explanation for reference as to why. It's worth the effort.
 
 function fearNotLetter(str) {
-  var compare = str.charCodeAt(0),
+  let compare = str.charCodeAt(0),
     missing;
 
   str.split("").map(function (letter, index) {
@@ -489,10 +489,10 @@ uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]); //should return [1, 3, 2, 5, 4
 
 // another solution using double fors to iterate on the 2 layers array
 function uniteUnique(arr) {
-  var args = [...arguments];
-  var result = [];
-  for (var i = 0; i < args.length; i++) {
-    for (var j = 0; j < args[i].length; j++) {
+  let args = [...arguments];
+  let result = [];
+  for (let i = 0; i < args.length; i++) {
+    for (let j = 0; j < args[i].length; j++) {
       if (!result.includes(args[i][j])) {
         result.push(args[i][j]);
       }
@@ -587,9 +587,9 @@ sumFibs(4);
 
 // another way of writting similar logic
 function sumFibs(num) {
-  var prevNumber = 0;
-  var currNumber = 1;
-  var result = 0;
+  let prevNumber = 0;
+  let currNumber = 1;
+  let result = 0;
   while (currNumber <= num) {
     if (currNumber % 2 !== 0) {
       result += currNumber;
@@ -709,8 +709,8 @@ dropElements([1, 2, 3, 4], function (n) {
 
 // can be done using shift 01
 function dropElements(arr, func) {
-  var times = arr.length;
-  for (var i = 0; i < times; i++) {
+  let times = arr.length;
+  for (let i = 0; i < times; i++) {
     if (func(arr[0])) {
       break;
     } else {
@@ -840,6 +840,8 @@ truthCheck(
 
 // Exerc-19 ---------------------------------- //
 // Arguments Optional
+// Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+
 function addTogether() {
   // if there is only 1 argument and both are numbers
   if (arguments[1] == null && isANumber(arguments[0])) {
@@ -887,3 +889,67 @@ function addTogether(first, second) {
 }
 
 // Exerc-20 ---------------------------------- //
+// Make a Person
+// Fill in the object constructor with the following methods: getFirstName() getLastName() getFullName() setFirstName(first) setLastName(last) setFullName(firstAndLast)
+
+let Person = function (firstAndLast) {
+  let completeName = firstAndLast;
+
+  //example function given by the exercise, not using ES6
+  this.getFullName = function () {
+    return completeName;
+  };
+
+  this.getFirstName = () => {
+    return completeName.split(" ")[0];
+  };
+
+  this.getLastName = () => {
+    return completeName.split(" ")[1];
+  };
+
+  this.setFirstName = (first) => {
+    completeName = first + " " + completeName.split(" ")[1];
+  };
+
+  this.setLastName = (last) => {
+    completeName = completeName.split(" ")[0] + " " + last;
+  };
+
+  this.setFullName = (fullName) => {
+    completeName = fullName;
+  };
+};
+
+let bob = new Person("Bob Ross");
+bob.getFullName(); // should return "Bob Ross".
+// bob.getLastName() should return "Ross".
+// bob.getFullName() should return "Haskell Ross" after bob.setFirstName("Haskell").
+// bob.getFullName() should return "Haskell Curry" after bob.setLastName("Curry").
+// bob.getFullName() should return "Haskell Curry" after bob.setFullName("Haskell Curry").
+
+// Exerc-21 ---------------------------------- //
+// Map the Debris
+// Return a new array that transforms the elements' average altitude into their orbital periods (in seconds).
+//--- several Math usage and adding object to array.
+function orbitalPeriod(arr) {
+  let GM = 398600.4418;
+  let earthRadius = 6367.4447;
+  let orbitalArray = [];
+
+  arr.forEach((elem) => {
+    orbitalArray.push({
+      name: elem.name,
+      orbitalPeriod: Math.round(
+        2 * Math.PI * Math.sqrt(Math.pow(earthRadius + elem.avgAlt, 3) / GM)
+      ),
+    });
+  });
+  //console.log(orbitalArray);
+  return orbitalArray;
+}
+
+orbitalPeriod([{ name: "sputnik", avgAlt: 35873.5553 }]);
+// orbitalPeriod([{name: "iss", avgAlt: 413.6}, {name: "hubble", avgAlt: 556.7}, {name: "moon", avgAlt: 378632.553}]) should return [{name : "iss", orbitalPeriod: 5557}, {name: "hubble", orbitalPeriod: 5734}, {name: "moon", orbitalPeriod: 2377399}].
+
+// some solution can be done changing the original array, with mutation, but I dont recomend it;
