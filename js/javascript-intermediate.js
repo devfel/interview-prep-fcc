@@ -840,3 +840,50 @@ truthCheck(
 
 // Exerc-19 ---------------------------------- //
 // Arguments Optional
+function addTogether() {
+  // if there is only 1 argument and both are numbers
+  if (arguments[1] == null && isANumber(arguments[0])) {
+    // saving the first parameter to be acessed on the second call.
+    let aux = arguments[0];
+    return (secondCall) => {
+      // testing if second call of the function has a number as parameter.
+      if (isANumber(secondCall)) {
+        return aux + secondCall;
+      }
+    };
+  }
+
+  // if there are 2 arguments and both are numbers
+  else if (
+    arguments[1] != null &&
+    isANumber(arguments[0]) &&
+    isANumber(arguments[1])
+  ) {
+    return arguments[0] + arguments[1];
+  }
+}
+
+// verify if the parameter is a strictly a number;
+function isANumber(test) {
+  if (typeof test === "number") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+addTogether(2)([3]); // should return undefined.
+addTogether(5)(7); // should return 12.
+addTogether(2, 3); // should return 5.
+
+// another solution, consize to write but no so clear to read.
+function addTogether(first, second) {
+  if (typeof first !== "number") {
+    return undefined;
+  }
+  const sum = (second) =>
+    typeof second === "number" ? first + second : undefined;
+  return typeof second === "undefined" ? (second) => sum(second) : sum(second);
+}
+
+// Exerc-20 ---------------------------------- //
